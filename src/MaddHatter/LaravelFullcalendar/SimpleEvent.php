@@ -49,6 +49,7 @@ class SimpleEvent implements IdentifiableEvent
      * @param string|DateTime $end   If string, must be valid datetime format: http://bit.ly/1z7QWbg
      * @param int|string|null $id
      * @param array           $options
+     * @throws \Exception
      */
     public function __construct($title, $isAllDay, $start, $end, $id = null, $options = [])
     {

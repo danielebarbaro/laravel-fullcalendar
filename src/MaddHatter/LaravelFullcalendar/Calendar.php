@@ -2,6 +2,7 @@
 
 use ArrayAccess;
 use DateTime;
+use Illuminate\Support\Str;
 use Illuminate\View\Factory;
 
 class Calendar
@@ -70,6 +71,7 @@ class Calendar
      * @param string          $id    event Id
      * @param array           $options
      * @return SimpleEvent
+     * @throws \Exception
      */
     public static function event($title, $isAllDay, $start, $end, $id = null, $options = [])
     {
@@ -89,7 +91,7 @@ class Calendar
     /**
      * Get the <script> block to render the calendar (as a View)
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function script()
     {
@@ -126,7 +128,7 @@ class Calendar
             return $this->id;
         }
 
-        $this->id = str_random(8);
+        $this->id = Str::random(8);
 
         return $this->id;
     }
@@ -230,7 +232,6 @@ class Calendar
         }
 
         return $json;
-
     }
 
     /**
