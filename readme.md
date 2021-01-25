@@ -24,7 +24,7 @@ Or add the following to your composer.json's require section and `composer updat
 Register the service provider in your `app.php` config file:
 
 ```php
-MaddHatter\LaravelFullcalendar\ServiceProvider::class,
+MaddHatter\LaravelFullcalendar\CalendarServiceProvider::class,
 ```
 
 And optionally create an alias:

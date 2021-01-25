@@ -2,15 +2,13 @@
 
 use ArrayAccess;
 use DateTime;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Illuminate\View\Factory;
 
 class Calendar
 {
 
-    /**
-     * @var Factory
-     */
     protected $view;
 
     /**
@@ -64,16 +62,16 @@ class Calendar
     /**
      * Create an event DTO to add to a calendar
      *
-     * @param string          $title
-     * @param string          $isAllDay
-     * @param string|DateTime $start If string, must be valid datetime format: http://bit.ly/1z7QWbg
-     * @param string|DateTime $end   If string, must be valid datetime format: http://bit.ly/1z7QWbg
-     * @param string          $id    event Id
-     * @param array           $options
+     * @param  string  $title
+     * @param  bool  $isAllDay
+     * @param  string|DateTime  $start  If string, must be valid datetime format: http://bit.ly/1z7QWbg
+     * @param  string|DateTime  $end  If string, must be valid datetime format: http://bit.ly/1z7QWbg
+     * @param  null  $id  event Id
+     * @param  array  $options
      * @return SimpleEvent
      * @throws \Exception
      */
-    public static function event($title, $isAllDay, $start, $end, $id = null, $options = [])
+    public static function event(string $title, bool $isAllDay, $start, $end, $id = null, $options = []): SimpleEvent
     {
         return new SimpleEvent($title, $isAllDay, $start, $end, $id, $options);
     }
@@ -83,7 +81,7 @@ class Calendar
      *
      * @return string
      */
-    public function calendar()
+    public function calendar(): string
     {
         return '<div id="calendar-' . $this->getId() . '"></div>';
     }
@@ -91,7 +89,7 @@ class Calendar
     /**
      * Get the <script> block to render the calendar (as a View)
      *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
+     * @return View|\Illuminate\View\View
      */
     public function script()
     {
@@ -106,10 +104,10 @@ class Calendar
     /**
      * Customize the ID of the generated <div>
      *
-     * @param string $id
+     * @param  string  $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(string $id): Calendar
     {
         $this->id = $id;
 
@@ -122,9 +120,9 @@ class Calendar
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
-        if ( ! empty($this->id)) {
+        if (! empty($this->id)) {
             return $this->id;
         }
 
@@ -136,11 +134,11 @@ class Calendar
     /**
      * Add an event
      *
-     * @param Event $event
+     * @param CalendarEvent $event
      * @param array $customAttributes
      * @return $this
      */
-    public function addEvent(Event $event, array $customAttributes = [])
+    public function addEvent(CalendarEvent $event, array $customAttributes = []): Calendar
     {
         $this->eventCollection->push($event, $customAttributes);
 
@@ -154,7 +152,7 @@ class Calendar
      * @param array $customAttributes
      * @return $this
      */
-    public function addEvents($events, array $customAttributes = [])
+    public function addEvents($events, array $customAttributes = []): Calendar
     {
         foreach ($events as $event) {
             $this->eventCollection->push($event, $customAttributes);
@@ -169,7 +167,7 @@ class Calendar
      * @param array $options
      * @return $this
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): Calendar
     {
         $this->userOptions = $options;
 
@@ -181,7 +179,7 @@ class Calendar
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return array_merge($this->defaultOptions, $this->userOptions);
     }
@@ -192,7 +190,7 @@ class Calendar
      * @param array $callbacks
      * @return $this
      */
-    public function setCallbacks(array $callbacks)
+    public function setCallbacks(array $callbacks): Calendar
     {
         $this->callbacks = $callbacks;
 
@@ -204,7 +202,7 @@ class Calendar
      *
      * @return array
      */
-    public function getCallbacks()
+    public function getCallbacks(): array
     {
         return $this->callbacks;
     }
@@ -214,7 +212,7 @@ class Calendar
      *
      * @return string
      */
-    public function getOptionsJson()
+    public function getOptionsJson(): string
     {
         $options      = $this->getOptions();
         $placeholders = $this->getCallbackPlaceholders();
@@ -239,7 +237,7 @@ class Calendar
      *
      * @return array
      */
-    protected function getCallbackPlaceholders()
+    protected function getCallbackPlaceholders(): array
     {
         $callbacks    = $this->getCallbacks();
         $placeholders = [];
@@ -258,7 +256,7 @@ class Calendar
      * @param $placeholders
      * @return string
      */
-    protected function replaceCallbackPlaceholders($json, $placeholders)
+    protected function replaceCallbackPlaceholders($json, $placeholders): string
     {
         $search  = [];
         $replace = [];
@@ -270,5 +268,4 @@ class Calendar
 
         return str_replace($search, $replace, $json);
     }
-
 }

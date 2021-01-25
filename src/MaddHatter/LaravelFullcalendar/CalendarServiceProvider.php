@@ -2,7 +2,7 @@
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
-class ServiceProvider extends BaseServiceProvider
+class CalendarServiceProvider extends BaseServiceProvider
 {
 
     /**
@@ -27,7 +27,7 @@ class ServiceProvider extends BaseServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return ['laravel-fullcalendar'];
     }
