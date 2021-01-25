@@ -1,32 +1,63 @@
 {
-    "name": "maddhatter/laravel-fullcalendar",
+    "name": "danielebarbaro/laravel-fullcalendar",
     "description": "Laravel helper for FullCalendar.io",
+    "keywords": [
+        "danielebarbaro",
+        "fullcalendar",
+        "fullcalendar.io",
+        "laravel-fullcalendar",
+        "laravel-full-calendar",
+        "laravel",
+        "vat"
+    ],
+    "homepage": "https://github.com/danielebarbaro/laravel-fullcalendar",
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
-            "name": "Shawn Tunney",
-            "email": "shawn.tunney@gmail.com"
+            "name": "Daniele Barbaro",
+            "email": "barbaro.daniele@gmail.com"
         }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": "^7.3",
         "ext-json": "*",
-        "illuminate/contracts": "5.*|6.*|7.*|8.*",
-        "illuminate/support": "5.*|6.*|7.*|8.*",
-        "laravel/helpers": "1.*"
+        "illuminate/contracts": "7.*|8.*",
+        "illuminate/support": "7.*|8.*",
+        "laravel/helpers": "^1.4.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.5",
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
         "psr-4": {
-            "MaddHatter\\LaravelFullcalendar\\": "src/"
+            "App\\": "app/",
+            "DanieleBarbaro\\LaravelFullCalendar\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DanieleBarbaro\\LaravelFullCalendar\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "cs-check": "vendor/bin/phpcs",
+        "cs-fix": "vendor/bin/phpcbf"
+    },
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "laravel": {
             "providers": [
-                "MaddHatter\\LaravelFullcalendar\\ServiceProvider"
+                "DanieleBarbaro\\LaravelFullCalendar\\FullCalendarServiceProvider"
             ],
             "aliases": {
-                "Calendar": "MaddHatter\\LaravelFullcalendar\\Facades\\Calendar"
+                "Calendar": "DanieleBarbaro\\LaravelFullCalendar\\Facades\\FullCalendar"
             }
         }
     },

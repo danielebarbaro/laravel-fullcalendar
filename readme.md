@@ -1,21 +1,19 @@
 # Laravel 5 Full Calendar Helper
 
-[![Latest Stable Version](https://poser.pugx.org/maddhatter/laravel-fullcalendar/v/stable)](https://packagist.org/packages/maddhatter/laravel-fullcalendar) [![Total Downloads](https://poser.pugx.org/maddhatter/laravel-fullcalendar/downloads)](https://packagist.org/packages/maddhatter/laravel-fullcalendar) [![Latest Unstable Version](https://poser.pugx.org/maddhatter/laravel-fullcalendar/v/unstable)](https://packagist.org/packages/maddhatter/laravel-fullcalendar) [![License](https://poser.pugx.org/maddhatter/laravel-fullcalendar/license)](https://packagist.org/packages/maddhatter/laravel-fullcalendar)
-
-***For Laravel 4.2: use the [laravel-4 branch](https://github.com/maddhatter/laravel-fullcalendar/tree/laravel-4)***
+[![Latest Stable Version](https://poser.pugx.org/danielebarbaro/laravel-fullcalendar/v/stable)](https://packagist.org/packages/danielebarbaro/laravel-fullcalendar) [![Total Downloads](https://poser.pugx.org/danielebarbaro/laravel-fullcalendar/downloads)](https://packagist.org/packages/danielebarbaro/laravel-fullcalendar) [![Latest Unstable Version](https://poser.pugx.org/danielebarbaro/laravel-fullcalendar/v/unstable)](https://packagist.org/packages/danielebarbaro/laravel-fullcalendar) [![License](https://poser.pugx.org/danielebarbaro/laravel-fullcalendar/license)](https://packagist.org/packages/danielebarbaro/laravel-fullcalendar)
 
 This is a simple helper package to make generating [http://fullcalendar.io](http://fullcalendar.io) in Laravel apps easier.
 
 ## Installing
 Require the package with composer using the following command:
 
-    composer require maddhatter/laravel-fullcalendar
+    composer require danielebarbaro/laravel-fullcalendar
 
 Or add the following to your composer.json's require section and `composer update`
 
 ```json
 "require": {
-	"maddhatter/laravel-fullcalendar": "~1.0"
+	"danielebarbaro/laravel-fullcalendar": "~1.0"
 }
 ```
 
@@ -24,13 +22,13 @@ Or add the following to your composer.json's require section and `composer updat
 Register the service provider in your `app.php` config file:
 
 ```php
-MaddHatter\LaravelFullcalendar\ServiceProvider::class,
+DanieleBarbaro\LaravelFullCalendar\ServiceProvider::class,
 ```
 
 And optionally create an alias:
 
 ```php
-'Calendar' => MaddHatter\LaravelFullcalendar\Facades\Calendar::class,
+'Calendar' => DanieleBarbaro\LaravelFullCalendar\Facades\FullCalendar::class,
 
 ```
 
@@ -44,11 +42,11 @@ You will also need to include [fullcalendar.io](http://fullcalendar.io/)'s files
 ### Creating Events
 
 #### Using `event()`:
-The simpliest way to create an event is to pass the event information to `Calendar::event()`:
+The simpliest way to create an event is to pass the event information to `FullCalendar::event()`:
 
 
 ```php
-$event = \Calendar::event(
+$event = \FullCalendar::event(
     "Valentine's Day", //event title
     true, //full day event?
     '2015-02-14', //start time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg)
@@ -61,10 +59,10 @@ $event = \Calendar::event(
 ```
 #### Implementing `Event` Interface
 
-Alternatively, you can use an existing class and have it implement `MaddHatter\LaravelFullcalendar\Event`. An example of an Eloquent model that implements the `Event` interface:
+Alternatively, you can use an existing class and have it implement `DanieleBarbaro\LaravelFullCalendar\Event`. An example of an Eloquent model that implements the `Event` interface:
 
 ```php
-class EventModel extends Eloquent implements \MaddHatter\LaravelFullcalendar\Event
+class EventModel extends Eloquent implements \DanieleBarbaro\LaravelFullCalendar\Event
 {
 
     protected $dates = ['start', 'end'];
@@ -122,10 +120,10 @@ class EventModel extends Eloquent implements \MaddHatter\LaravelFullcalendar\Eve
 
 #### `IdentifiableEvent` Interface
 
-If you wish for your existing class to have event IDs, implement `\MaddHatter\LaravelFullcalendar\IdentifiableEvent` instead. This interface extends `\MaddHatter\LaravelFullcalendar\Event` to add a `getId()` method:
+If you wish for your existing class to have event IDs, implement `\DanieleBarbaro\LaravelFullCalendar\IdentifiableEvent` instead. This interface extends `\DanieleBarbaro\LaravelFullCalendar\Event` to add a `getId()` method:
 
 ```php
-class EventModel extends Eloquent implements \MaddHatter\LaravelFullcalendar\IdentifiableEvent
+class EventModel extends Eloquent implements \DanieleBarbaro\LaravelFullCalendar\IdentifiableEvent
 {
 
 	// Implement all Event methods ...
@@ -145,12 +143,12 @@ class EventModel extends Eloquent implements \MaddHatter\LaravelFullcalendar\Ide
 
 If you want to add [additional parameters](http://fullcalendar.io/docs/event_data/Event_Object) to your events, there are two options:
 
-#### Using `Calendar::event()`
+#### Using `FullCalendar::event()`
 
-Pass an array of `'parameter' => 'value'` pairs as the 6th parameter to `Calendar::event()`:
+Pass an array of `'parameter' => 'value'` pairs as the 6th parameter to `FullCalendar::event()`:
 
 ```php
-$event = \Calendar::event(
+$event = \FullCalendar::event(
     "Valentine's Day", //event title
     true, //full day event?
     '2015-02-14', //start time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg)
@@ -168,7 +166,7 @@ $event = \Calendar::event(
 
 ```php
 <?php
-class CalendarEvent extends \Illuminate\Database\Eloquent\Model implements \MaddHatter\LaravelFullcalendar\Event
+class CalendarEvent extends \Illuminate\Database\Eloquent\Model implements \DanieleBarbaro\LaravelFullCalendar\Event
 {
 	//...
 
@@ -191,14 +189,14 @@ class CalendarEvent extends \Illuminate\Database\Eloquent\Model implements \Madd
 ```
 
 ### Create a Calendar
-To create a calendar, in your route or controller, create your event(s), then pass them to `Calendar::addEvent()` or `Calendar::addEvents()` (to add an array of events). `addEvent()` and `addEvents()` can be used fluently (chained together). Their second parameter accepts an array of valid [FullCalendar Event Object parameters](http://fullcalendar.io/docs/event_data/Event_Object/).
+To create a calendar, in your route or controller, create your event(s), then pass them to `FullCalendar::addEvent()` or `FullCalendar::addEvents()` (to add an array of events). `addEvent()` and `addEvents()` can be used fluently (chained together). Their second parameter accepts an array of valid [FullCalendar Event Object parameters](http://fullcalendar.io/docs/event_data/Event_Object/).
 
 #### Sample Controller code:
 
 ```php
 $events = [];
 
-$events[] = \Calendar::event(
+$events[] = \FullCalendar::event(
     'Event One', //event title
     false, //full day event?
     '2015-02-11T0800', //start time (you can also use Carbon instead of DateTime)
@@ -206,7 +204,7 @@ $events[] = \Calendar::event(
 	0 //optionally, you can specify an event ID
 );
 
-$events[] = \Calendar::event(
+$events[] = \FullCalendar::event(
     "Valentine's Day", //event title
     true, //full day event?
     new \DateTime('2015-02-14'), //start time (you can also use Carbon instead of DateTime)
@@ -214,9 +212,9 @@ $events[] = \Calendar::event(
 	'stringEventId' //optionally, you can specify an event ID
 );
 
-$eloquentEvent = EventModel::first(); //EventModel implements MaddHatter\LaravelFullcalendar\Event
+$eloquentEvent = EventModel::first(); //EventModel implements DanieleBarbaro\LaravelFullCalendar\Event
 
-$calendar = \Calendar::addEvents($events) //add an array with addEvents
+$calendar = \FullCalendar::addEvents($events) //add an array with addEvents
     ->addEvent($eloquentEvent, [ //set custom color fo this event
         'color' => '#800',
     ])->setOptions([ //set fullcalendar options
